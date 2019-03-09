@@ -8,7 +8,7 @@ systemctl mask firewalld
 #reset from previous install?
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
-dnf -y wget install socat ethtool
+dnf -y install wget socat ethtool
 
 # Set SELinux in permissive mode (effectively disabling it)
 setenforce 0
