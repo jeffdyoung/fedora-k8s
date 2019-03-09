@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export KUBECONFIG=/root/admin.kubeconfig
+export KUBECONFIG=/root/admin.conf
 source ~/.bash_profile
 
 #v1.11.7
@@ -13,8 +13,7 @@ export k8stag=v1.14.0-beta.1
 #export SKIP="Alpha|Kubectl|\[(Disruptive|Feature:[^\]]+|Flaky)\]"
 
 #otherwise
-#export SKIP="Alpha|\[(Disruptive|Feature:[^\]]+|Flaky)\]"
-
+export SKIP="Alpha|\[(Disruptive|Feature:[^\]]+|Flaky)\]"
 export KUBERNETES_CONFORMANCE_TEST=y
 
 #clean k8s directory and rebuild

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yum -y install make docker rsync net-tools device-mapper-persistent-data lvm2 gcc
+dnf -y install make docker rsync net-tools device-mapper-persistent-data lvm2 gcc
 
 
 #TODO add multi-arch logic
@@ -20,7 +20,6 @@ case "$(uname -m)" in \
     esac; \
     echo "https://storage.googleapis.com/golang/go$VERSION.linux-$GOARCH.tar.gz"; \
     curl https://storage.googleapis.com/golang/go$VERSION.linux-$GOARCH.tar.gz | tar -C /usr/local -xzf -; \
-    go version
 
 
 #set go path
@@ -28,4 +27,4 @@ echo 'export PATH=${PATH}:/usr/local/go/bin' >> ~/.bash_profile
 echo 'export GOPATH_K8S=${HOME}/go/src/k8s.io/kubernetes' >> ~/.bash_profile
 echo 'export PATH=${GOPATH_K8S}/third_party/etcd:${PATH}' >> ~/.bash_profile
 source ~/.bash_profile
-
+go version
