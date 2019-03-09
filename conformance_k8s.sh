@@ -1,14 +1,16 @@
 #!/bin/bash
 
-export KUBECONFIG=/etc/origin/master/admin.kubeconfig
+export KUBECONFIG=/root/admin.kubeconfig
 source ~/.bash_profile
 
 #v1.11.7
 #v1.13.3
-export k8stag=v1.11.7
+#export k8stag=v1.11.7
+#export k8stag=v1.11.7
+export k8stag=v1.14.0-beta.1
 
 #k8s < 1.12
-export SKIP="Alpha|Kubectl|\[(Disruptive|Feature:[^\]]+|Flaky)\]"
+#export SKIP="Alpha|Kubectl|\[(Disruptive|Feature:[^\]]+|Flaky)\]"
 
 #otherwise
 #export SKIP="Alpha|\[(Disruptive|Feature:[^\]]+|Flaky)\]"
@@ -35,4 +37,12 @@ make all WHAT="test/e2e/e2e.test vendor/github.com/onsi/ginkgo/ginkgo cmd/kubect
 
 
 go run hack/e2e.go -- --provider=skeleton --test --test_args="--ginkgo.focus=\[Conformance\] --ginkgo.skip=${SKIP}" --check-version-skew=false
+
+
+#export KUBECONFIG=/root/admin.config
+#export SKIP="Alpha|\[(Disruptive|Feature:[^\]]+|Flaky)\]"
+#export KUBERNETES_CONFORMANCE_TEST=y
+#kubetest --provider=skeleton --test --test_args="--ginkgo.focus=\[Conformance\] --ginkgo.skip=${SKIP}" 
+
+
 
