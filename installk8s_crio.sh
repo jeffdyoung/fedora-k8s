@@ -19,6 +19,9 @@ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 swapoff -a
 dnf -y install wget socat ethtool crio cri-tools conntrack ebtables iproute iptables util-linux
 
+systemctl enable crio
+systemctl restart crio
+
 
 cat > /etc/sysctl.d/99-kubernetes-cri.conf <<EOF
 net.bridge.bridge-nf-call-iptables  = 1
@@ -27,9 +30,8 @@ net.bridge.bridge-nf-call-ip6tables = 1
 EOF
 
 sysctl --system
-systemctl enable crio
-systemctl restart crio
 
+modprobe br_netfilter
 
 # Set SELinux in permissive mode (effectively disabling it)
 setenforce 0
