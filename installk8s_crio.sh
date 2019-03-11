@@ -17,8 +17,16 @@ systemctl mask firewalld
 #reset from previous install?
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 swapoff -a
-dnf -y install wget socat ethtool crio critools
+dnf -y install wget socat ethtool crio cri-tools conntrack ebtables iproute iptables util-linux
 
+
+cat > /etc/sysctl.d/99-kubernetes-cri.conf <<EOF
+net.bridge.bridge-nf-call-iptables  = 1
+net.ipv4.ip_forward                 = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF
+
+sysctl --system
 systemctl enable crio
 systemctl restart crio
 
@@ -34,21 +42,13 @@ chmod +x {kubeadm,kubelet,kubectl}
 popd
 curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubelet.service"  > /etc/systemd/system/kubelet.service
 mkdir -p /etc/systemd/system/kubelet.service.d
+mkdir -p /usr/lib/modules-load.d 
 curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/10-kubeadm.conf"  > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-
-
+curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/50-kubeadm.conf"  > /usr/lib/sysctl.d/50-kubeadm.conf
 curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubelet.env" > /etc/sysconfig/kubelet
-
+curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubeadm.conf" > /usr/lib/modules-load.d/kubeadm.conf
+echo "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd" > /etc/sysconfig/kubelet
 mkdir -p /etc/kubernetes/manifests
-
-
-cat <<EOF >  /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-EOF
-sysctl --system
-
-modprobe br_netfilter
 
 
 #download cni
