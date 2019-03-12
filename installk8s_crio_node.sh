@@ -17,7 +17,7 @@ systemctl mask firewalld
 #reset from previous install?
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 swapoff -a
-dnf -y install wget socat ethtool crio cri-tools conntrack ebtables iproute iptables util-linux
+dnf -y install tar wget socat ethtool crio cri-tools conntrack ebtables iproute iptables util-linux
 
 systemctl enable crio
 systemctl restart crio
