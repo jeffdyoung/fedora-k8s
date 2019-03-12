@@ -24,6 +24,7 @@ case "$(uname -m)" in \
 
 #set go path
 echo 'export PATH=${PATH}:/usr/local/go/bin' >> ~/.bash_profile
+echo 'export GOPATH=${HOME}/go' >> ~/.bash_profile
 echo 'export GOPATH_K8S=${HOME}/go/src/k8s.io/kubernetes' >> ~/.bash_profile
 echo 'export PATH=${GOPATH_K8S}/third_party/etcd:${PATH}' >> ~/.bash_profile
 source ~/.bash_profile
