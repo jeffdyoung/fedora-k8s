@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #choose release version to use
-RELEASE=v1.14.0-beta.2
+#RELEASE=v1.14.0-beta.2
+export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest-1.14.txt)
 
 case "$(uname -m)" in \
         ppc64le) export GOARCH='ppc64le';; \
@@ -39,16 +40,23 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
 
 pushd /usr/bin
-curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/${RELEASE}/bin/linux/${GOARCH}/{kubeadm,kubelet,kubectl}
+#curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/${RELEASE}/bin/linux/${GOARCH}/{kubeadm,kubelet,kubectl}
+curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release-dev/ci-cross/${RELEASE}/bin/linux/${GOARCH}/{kubeadm,kubelet,kubectl}
+
 chmod +x {kubeadm,kubelet,kubectl}
 popd
-curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubelet.service"  > /etc/systemd/system/kubelet.service
+curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/master/build/rpms/kubelet.service"  > /etc/systemd/system/kubelet.service
+#curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubelet.service"  > /etc/systemd/system/kubelet.service
 mkdir -p /etc/systemd/system/kubelet.service.d
 mkdir -p /usr/lib/modules-load.d 
-curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/10-kubeadm.conf"  > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/50-kubeadm.conf"  > /usr/lib/sysctl.d/50-kubeadm.conf
-curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubelet.env" > /etc/sysconfig/kubelet
-curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubeadm.conf" > /usr/lib/modules-load.d/kubeadm.conf
+curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/master/build/rpms/10-kubeadm.conf"  > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+#curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/10-kubeadm.conf"  > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/master/build/rpms/50-kubeadm.conf"  > /usr/lib/sysctl.d/50-kubeadm.conf
+#curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/50-kubeadm.conf"  > /usr/lib/sysctl.d/50-kubeadm.conf
+curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/master/build/rpms/kubelet.env" > /etc/sysconfig/kubelet
+#curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubelet.env" > /etc/sysconfig/kubelet
+curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/master/build/rpms/kubeadm.conf" > /usr/lib/modules-load.d/kubeadm.conf
+#curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/build/rpms/kubeadm.conf" > /usr/lib/modules-load.d/kubeadm.conf
 echo "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd" > /etc/sysconfig/kubelet
 mkdir -p /etc/kubernetes/manifests
 
