@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+export pullcmd="buildah pull"
+
+echo ${pullcmd}
+${pullcmd} docker.io/library/nginx:1.14-alpine
+${pullcmd} docker.io/library/nginx:1.15-alpine
+${pullcmd} docker.io/library/busybox:1.29
+${pullcmd} gcr.io/kubernetes-e2e-test-images/netexec:1.1
+${pullcmd} gcr.io/google-samples/gb-frontend:v6
+${pullcmd} gcr.io/google-samples/gb-redisslave:v3
+${pullcmd} gcr.io/kubernetes-e2e-test-images/dnsutils:1.1
+${pullcmd} gcr.io/kubernetes-e2e-test-images/jessie-dnsutils:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/kitten:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/hostexec:1.1
+${pullcmd} gcr.io/kubernetes-e2e-test-images/nettest:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/porter:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/entrypoint-tester:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/serve-hostname:1.1
+${pullcmd} gcr.io/kubernetes-e2e-test-images/liveness:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/nautilus:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/mounttest:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/mounttest-user:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/redis:1.0
+${pullcmd} gcr.io/kubernetes-e2e-test-images/test-webserver:1.0
+${pullcmd} k8s.gcr.io/pause:3.1
+
