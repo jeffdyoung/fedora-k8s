@@ -73,6 +73,12 @@ tar -zxvf /opt/cni/cni.plugins.tgz -C /opt/cni/bin/
 
 systemctl enable --now kubelet
 
+mkdir /root/images
+pushd /root/images
+wget https://storage.googleapis.com/kubernetes-release-dev/ci-cross/${RELEASE}/bin/linux/${GOARCH}/kube-proxy.tar
+podman load -i kube-proxy.tar
+popd
+
 
 #only run on master
 #kubeadm config images pull --kubernetes-version ${RELEASE}
