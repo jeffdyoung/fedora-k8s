@@ -2,7 +2,8 @@
 
 #choose release version to use
 #RELEASE=v1.14.0-beta.2
-export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest-1.14.txt)
+#export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest-1.14.txt)
+export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt)
 
 case "$(uname -m)" in \
         ppc64le) export GOARCH='ppc64le';; \
