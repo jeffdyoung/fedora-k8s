@@ -2,7 +2,8 @@
 
 #choose release version to use
 #RELEASE=v1.14.0-beta.2
-export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest-1.14.txt)
+#export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest-1.14.txt)
+export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt)
 
 case "$(uname -m)" in \
         ppc64le) export GOARCH='ppc64le';; \
@@ -88,4 +89,7 @@ podman load -i kube-proxy.tar
 popd
 kubeadm config images pull --kubernetes-version ${RELEASE}
 kubeadm init  --kubernetes-version ${RELEASE}  --ignore-preflight-errors=SystemVerification --pod-network-cidr=10.244.0.0/16
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
