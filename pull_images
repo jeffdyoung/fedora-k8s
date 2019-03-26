@@ -1,7 +1,22 @@
 #!/bin/bash
 
+#missing s390x
+#gcr.io/kubernetes-e2e-test-images/redis:1.0
+#gcr.io/google-samples/gb-frontend:v6
+#gcr.io/google-samples/gb-redisslave:v3
+#gcr.io/kubernetes-e2e-test-images/dnsutils:1.1
+#gcr.io/kubernetes-e2e-test-images/jessie-dnsutils:1.0
+
+#buildah bud -t gcr.io/kubernetes-e2e-test-images/hostexec:1.1 .
+#gcr.io/kubernetes-e2e-test-images/hostexec:1.1
+
+
+
 
 export pullcmd="buildah pull"
+
+
+
 
 echo ${pullcmd}
 ${pullcmd} docker.io/library/nginx:1.14-alpine
