@@ -4,7 +4,8 @@ export KUBECONFIG=/root/admin.conf
 source ~/.bash_profile
 
 #export k8stag=v1.14.0-beta.2
-export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest-1.14.txt)
+#export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest-1.14.txt)
+export RELEASE=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt)
 export k8stag=$(echo $RELEASE | awk -F "+" '{print $2}')
 
 export k8sresults=/root/s390test

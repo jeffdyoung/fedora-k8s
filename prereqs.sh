@@ -6,11 +6,8 @@ dnf -y install make docker rsync net-tools device-mapper-persistent-data lvm2 gc
 #TODO add multi-arch logic
 
 
-# install golang-11
-#curl -O https://dl.google.com/go/go1.11.5.linux-arm64.tar.gz
-#sudo tar -C /usr/local -xzf go1.11.5.linux-arm64.tar.gz
-#rm -f go1.11.5.linux-arm64.tar.gz
-export VERSION=1.11.5
+# install golang
+export VERSION=1.12.1
 
 case "$(uname -m)" in \
         ppc64le) GOARCH='ppc64le';; \
