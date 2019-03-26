@@ -17,8 +17,17 @@ export pullcmd="buildah pull"
 
 
 
-
 echo ${pullcmd}
+#1.15
+${pullcmd} gcr.io/kubernetes-e2e-test-images/liveness:1.1
+${pullcmd} docker.io/library/busybox:1.29
+${pullcmd} quay.io/coreos/etcd:v3.3.10
+${pullcmd} gcr.io/kubernetes-e2e-test-images/netexec:1.1
+${pullcmd} gcr.io/kubernetes-e2e-test-images/sample-apiserver:1.10
+
+
+
+#1.14
 ${pullcmd} docker.io/library/nginx:1.14-alpine
 ${pullcmd} docker.io/library/nginx:1.15-alpine
 ${pullcmd} docker.io/library/busybox:1.29
