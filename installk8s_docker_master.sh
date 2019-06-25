@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #choose release version to use
-RELEASE=v1.15.0
+RELEASE=v1.14.0
 
 case "$(uname -m)" in \
         ppc64le) export GOARCH='ppc64le';; \
@@ -66,5 +66,5 @@ systemctl enable --now kubelet
 
 #only run on master
 kubeadm config images pull --kubernetes-version ${RELEASE}
-kubeadm init  --kubernetes-version ${RELEASE}  --pod-network-cidr=10.244.0.0/16
+kubeadm init  --kubernetes-version ${RELEASE}  --pod-network-cidr=10.244.0.0/16  --apiserver-advertise-address=192.168.56.6
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
