@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #choose release version to use
-RELEASE=v1.14.0
+RELEASE=v1.15.0
 
 case "$(uname -m)" in \
         ppc64le) export GOARCH='ppc64le';; \
