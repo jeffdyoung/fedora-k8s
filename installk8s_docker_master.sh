@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #choose release version to use
-RELEASE=v1.15.3
+RELEASE=v1.14.6
 
 case "$(uname -m)" in \
         ppc64le) export GOARCH='ppc64le';; \
@@ -11,6 +11,7 @@ case "$(uname -m)" in \
     esac; \
 
 
+echo $GOARCH
 
 systemctl stop firewalld
 systemctl mask firewalld
@@ -53,10 +54,18 @@ modprobe br_netfilter
 
 #download cni
 rm -rf /opt/cni/bin
+rm -rf /opt/cni/*
 mkdir -p /opt/cni/bin
 
+echo "Download cni"
+# https://github.com/containernetworking/cni/releases/download/v0.6.0/cni-amd64-v0.6.0.tgz
 wget -O /opt/cni/cni.tgz https://github.com/containernetworking/cni/releases/download/v0.6.0/cni-${GOARCH}-v0.6.0.tgz
+#wget -O /opt/cni/cni.tgz https://github.com/containernetworking/cni/releases/download/v0.7.1/cni-${GOARCH}-v0.7.1.tgz
+
+echo "Download cni plugin"
+#https://github.com/containernetworking/plugins/releases/download/v0.8.2/cni-plugins-linux-amd64-v0.8.2.tgz
 wget -O /opt/cni/cni.plugins.tgz https://github.com/containernetworking/plugins/releases/download/v0.7.4/cni-plugins-${GOARCH}-v0.7.4.tgz
+#wget -O /opt/cni/cni.plugins.tgz https://github.com/containernetworking/plugins/releases/download/v0.8.2/cni-plugins-linux-${GOARCH}-v0.8.2.tgz
 
 tar -xzvf /opt/cni/cni.tgz -C /opt/cni/bin/
 tar -zxvf /opt/cni/cni.plugins.tgz -C /opt/cni/bin/
