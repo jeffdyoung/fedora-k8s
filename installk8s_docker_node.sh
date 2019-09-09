@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #choose release version to use
-RELEASE=v1.15.0
+RELEASE=v1.15.3
 
 case "$(uname -m)" in \
         ppc64le) export GOARCH='ppc64le';; \
@@ -61,6 +61,7 @@ wget -O /opt/cni/cni.plugins.tgz https://github.com/containernetworking/plugins/
 tar -xzvf /opt/cni/cni.tgz -C /opt/cni/bin/
 tar -zxvf /opt/cni/cni.plugins.tgz -C /opt/cni/bin/
 
+systemctl restart docker
 systemctl enable --now kubelet
 
 
